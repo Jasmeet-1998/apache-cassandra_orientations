@@ -90,3 +90,95 @@ Cassandra- application->modle->data
 2. basic cql commands- SELECT, TRUNCATE, ALTER TABLE, SOURCE
 
 > Keyspace
+
+- keyspace contains table and table contains data
+- top level container to organize related set of tables
+- its similar to relation database schema
+
+            CREATE KEYSPACE killrvideo
+                WITHREPLICATIOn={'class':'SimpleStrategy','replication_factor':1};
+
+- defines replication settings- i.e how many copies of data is going to be stored within a cluster
+
+- to access a table belonging to a keyspace
+
+            USE killrvideo;
+
+> CREATE & PRIMARYKEY clause
+
+- every cassandra table has a primary key
+- primary key is used to uniquely identify rows in the tables
+
+            CREATE TABLE users(
+                user uuid,
+                email text,
+                name text,
+                PRIMARYKEY(user)
+            );
+
+- NOTE 📝 partition key(user uuid) is not enough to define uniqueness of a row in a table , primarykey clause along with parition key helps in describing uniquness of the rown in a table.
+
+> SELECT
+
+- pull data from a table
+
+            # syntax
+
+            # GET ALL ROWS
+            SELECT *
+            FROM tableName
+
+            #GET ONLY SPECIFIC COLUMNS DATA
+            SELECT column1,column2,column3
+            FROM tableName;
+
+            # LIMIT THE NUMBER OF ROWS TO 10
+            SELECT *
+            FROM tableName
+            LIMIT 10;
+
+            # AGGREGATION LIKE COUNT
+            SELECT COUNT(*)
+            FROM tableName;
+
+> TRUNCATE
+
+- DELETES all rows from the table while the schema(keyspace) is intact
+- once removed can be restored from backup
+- sends a JMX command to all nodes to related tables which hold the data
+- if any of the node is down the command(JMX) will fail
+
+> ALTER TABLE
+
+WHAT CAN BE CHANGED?
+
+- datatype of column
+- add new columns
+- drop columns
+- rename columns
+- change table properties
+
+WHAT CANNOT BE CHANGED?
+
+- cannot change the primary key columns
+
+            ALTER TABLE tableName ADD new_column text;
+            ALTER TABLE tableName DROP exisitng_column;
+
+> SOURCE
+
+- source command helps to execute a set/collection of CQL statements from a file
+- the file name must be in single quotes
+
+            SOURCE './mycqlScript.cql';
+
+- cqlsh will output the results of each command sequentially as it executes
+
+> ## PARTITIONS [📝IMP]
+
+- partitions give indication about where the data is in the data model and in which cluster.
+
+1. partitions
+2. partitions keys
+3. composite partition keys
+4. clustering columns
