@@ -1,6 +1,8 @@
-> Apache Cassandra Orientations
+> # Apache Cassandra Orientations
 
-Module-1 Cassandra Core [basics]
+---
+
+> # Module-1 Cassandra Core [basics]
 
 - difference in relation vs apache cassandra database
 - cassandra tables
@@ -182,3 +184,30 @@ WHAT CANNOT BE CHANGED?
 2. partitions keys
 3. composite partition keys
 4. clustering columns
+
+> queries in cassandra
+
+- each query must have the partition key present in the WHERE CLAUSE
+
+            # CASSANDRA [storage structure--->CQL table]
+
+            # storage structure
+            1| name: insurgent||runtime:144||year:2015
+            2| name: interstellar||runtime:98||year:2014
+            3| name: mockingjay||runtime:122||year:2014
+
+            # cql table
+            ID -  Title -   Runtime - Year
+            1    Insurgent    144     2015
+            2    Interstellar 98      2014
+            3    Mockingjay   122     2014
+
+- 📝 determination of partition key is always crucial
+- the partition key is always the first value in the primary key
+
+---
+
+Module-2 Cassandra Building Blocks [18]
+
+- denormalization
+- collection, counters & user defined types
